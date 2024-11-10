@@ -1,0 +1,19 @@
+{
+    "amount": {
+        "x": 200,
+        "y": 292,
+        "align": "right",
+        "font": "C:/Users/Acer/Desktop/font/ARIAL.TTF",
+        "size": 40,
+        "color": "#000000"
+    },
+    "date": {
+        "x": 311,
+        "y": 630,
+        "align": "right",
+        "font": "C:/Users/Acer/Desktop/font/ARIAL.TTF",
+        "size": 15,
+        "color": "#000000",
+        "format": "%Y-%m-%d"
+    }
+}
