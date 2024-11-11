@@ -11,7 +11,7 @@ processed_images_path = './processed_images.json'  # File to store names of proc
 font_align = "right"
 font_path = "./font/ARIAL.TTF"
 color = "#000000"
-date_format = "%Y-%m-%d"
+date_format = "%Y-%m-%d %I:%M %P"
 amount_font_size = 40  
 date_font_size = 15
 
@@ -71,11 +71,11 @@ def display_positions(image):
         x = positions['amount']['x'] + (text_width )
 
     if font_align == "center":
-        a = positions['date']['a'] - (date_width // 2)
+        a = positions['date']['x'] - (date_width // 2)
     elif font_align == "right":
-        c = positions['date']['a'] - (date_width )
+        a = positions['date']['x'] - (date_width )
     elif font_align == "left":
-        a = positions['date']['a'] + (date_width )    
+        a = positions['date']['x'] + (date_width )    
 
     # Draw preview text at the selected positions with different font sizes
     draw.text((x, y), text, font=amount_font, fill=color)
