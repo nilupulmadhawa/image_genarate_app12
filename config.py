@@ -9,7 +9,7 @@ folder_path = './templates'  # Folder containing images
 processed_images_path = './processed_images.json'  # File to store names of processed images
 
 font_align = "right"
-font_path = "C:/Users/Acer/Desktop/font/ARIAL.TTF"
+font_path = "./font/ARIAL.TTF"
 color = "#000000"
 date_format = "%Y-%m-%d"
 amount_font_size = 40  
@@ -51,10 +51,37 @@ def display_positions(image):
     amount_font = ImageFont.truetype(font_path, positions['amount']['size'])
     date_font = ImageFont.truetype(font_path, positions['date']['size'])
     x =positions['amount']['x']
+    a =positions['date']['x']
+    text = "1,200"
+    date = "07 Nov 2024 12:55 PM"
+    text_bbox = draw.textbbox((0, 0), text, font=amount_font)
+    date_bbox = draw.textbbox((0,0), date, font=date_font)
+    text_width = text_bbox[2] - text_bbox[0]
+    date_width = date_bbox[2] - date_bbox[0]
+    text_height = text_bbox[3] - text_bbox[1]
+    date_height = date_bbox[3] - date_bbox[1]
+    y = positions['amount']['y'] - (text_height) 
+    b = positions['date']['y']-(date_height)
+
+    if font_align == "center":
+        x = positions['amount']['x'] - (text_width // 2)
+    elif font_align == "right":
+        x = positions['amount']['x'] - (text_width )
+    elif font_align == "left":
+        x = positions['amount']['x'] + (text_width )
+
+    if font_align == "center":
+        a = positions['date']['a'] - (date_width // 2)
+    elif font_align == "right":
+        c = positions['date']['a'] - (date_width )
+    elif font_align == "left":
+        a = positions['date']['a'] + (date_width )    
 
     # Draw preview text at the selected positions with different font sizes
-    draw.text((positions['amount']['x'], positions['amount']['y']), "1,200", font=amount_font, fill=color,align=font_align)
-    draw.text((positions['date']['x'], positions['date']['y']), "07 Nov 2024 12:55 PM", font=date_font, fill=color,align=font_align)
+    draw.text((x, y), text, font=amount_font, fill=color)
+    draw.text((a, b), date, font=date_font, fill=color)
+    # draw.text((positions['date']['x'], positions['date']['y']), "07 Nov 2024 12:55 PM", font=date_font, fill=color,align='right')
+
 
     # Convert back to OpenCV format and show the preview
     preview_image = cv2.cvtColor(np.array(pil_image), cv2.COLOR_RGB2BGR)
@@ -84,8 +111,8 @@ def process_image(image_path):
                 "color": color
             },
             "date": {
-                "x": 0,
-                "y": 0,
+                "a": 0,
+                "b": 0,
                 "align": font_align,
                 "font": font_path,
                 "size": date_font_size,    # Font size for date
