@@ -3,8 +3,9 @@
     "data": [
         {
             "attr": "amount",
+            "attr_type": "number",
             "align": "right",
-            "font": "./font/ARIAL.TTF",
+            "font": "ARIAL.TTF",
             "size": 40,
             "color": "#000000",
             "format": "$%0.2f",
@@ -15,18 +16,18 @@
             "attr": "date",
             "attr_type": "datetime",
             "align": "right",
-            "font": "./font/ARIAL.TTF",
+            "font": "ARIAL.TTF",
             "size": 15,
             "color": "#000000",
             "format": "%Y-%m-%d",
-            "x": 308,
-            "y": 643
+            "x": 345,
+            "y": 673
         },
         {
             "attr": "time",
             "attr_type": "datetime",
             "align": "right",
-            "font": "./font/ARIAL.TTF",
+            "font": "ARIAL.TTF",
             "size": 15,
             "color": "#000000",
             "format": "%I:%M %P",
