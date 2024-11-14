@@ -98,7 +98,7 @@ def draw_image(draw, time_slot, amount, data):
 
 
         # Draw the text on the image
-        y -= text_height
+        y -= text_height+5
 
         if align == "center":
             x -= text_width // 2
@@ -110,7 +110,7 @@ def draw_image(draw, time_slot, amount, data):
         # Draw the text on the image at the specified position
         draw.text((x, y), text, font=font, fill=color)
         if underline:
-            draw.line((x, y + text_height+15, x + text_width, y + text_height+15), fill=color, width=2)
+            draw.line((x, y + text_height+13, x + text_width, y + text_height+13), fill=color, width=2)
 
     return draw
 

@@ -46,7 +46,7 @@ def draw_image(draw, time_slot, amount, data):
         text_width = text_bbox[2] - text_bbox[0]
         text_height = text_bbox[3] - text_bbox[1]
         # Draw the text on the image
-        y -= text_height
+        y -= text_height +5
 
         if align == "center":
             x -= text_width // 2
@@ -59,7 +59,7 @@ def draw_image(draw, time_slot, amount, data):
         draw.text((x, y), text, font=font, fill=color)
 
         if underline:
-            draw.line((x, y + text_height+15, x + text_width, y + text_height+15), fill=color, width=2)
+            draw.line((x, y + text_height+10, x + text_width, y + text_height+10), fill=color, width=2)
 
     return draw
 
@@ -76,6 +76,15 @@ def click_event(event, x, y, flags, param):
     global click_count
     json_data = param  # Access json_data directly from the passed parameter
     # Check if Ctrl is held down and left mouse button is clicked
+    if event == cv2.EVENT_LBUTTONDOWN:  # Only capture when mouse moves
+        temp_img = img.copy()  # To keep the original image unmodified
+        text = f"X: {x}, Y: {y}"
+        #draw line x y remove old line
+        cv2.line(temp_img, (0, y), (temp_img.shape[1], y), (0, 255, 0), 1)
+        cv2.line(temp_img, (x, 0), (x, temp_img.shape[0]), (0, 255, 0), 1)
+        cv2.putText(temp_img, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
+        cv2.imshow("Select Positions", temp_img)
+        
     if event == cv2.EVENT_LBUTTONDOWN and (flags & cv2.EVENT_FLAG_CTRLKEY):
         if click_count < len(json_data['data']):  # Ensure we only capture required clicks
             data = json_data['data'][click_count]
@@ -90,16 +99,16 @@ def click_event(event, x, y, flags, param):
 
 # Function to process each image and get positions
 def process_image(image_path, json_data):
-    global click_count
+    global click_count, img
     click_count = 0  # Reset click count for each image
     
-    image = cv2.imread(image_path)
-    if image is None:
+    img = cv2.imread(image_path)
+    if img is None:
         print(f"Error loading image: {image_path}")
         return None  # Skip if image loading fails
 
     print(f"Please select the position for {json_data['data'][click_count]['attr']}.")
-    cv2.imshow("Select Positions", image)
+    cv2.imshow("Select Positions", img)
     cv2.setMouseCallback("Select Positions", click_event, param=json_data)
 
     while click_count < len(json_data['data']):

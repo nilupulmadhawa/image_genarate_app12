@@ -11,9 +11,9 @@
             "size": 40,
             "color": "#000000",
             "format": "$%0.2f",
-            "underline": true,
-            "x": 202,
-            "y": 326
+            "underline": false,
+            "x": 199,
+            "y": 327
         },
         {
             "attr": "date",
@@ -23,9 +23,9 @@
             "size": 15,
             "color": "#000000",
             "format": "%Y-%m-%d",
-            "underline": true,
-            "x": 309,
-            "y": 645
+            "underline": false,
+            "x": 312,
+            "y": 647
         }
     ]
 }
