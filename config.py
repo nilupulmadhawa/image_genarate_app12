@@ -30,7 +30,7 @@ def draw_image(draw, time_slot, amount, data):
         size = item['size']
         color = item['color']
         format = item['format']
-
+        underline = item['underline']
         # Choose the font
         font = ImageFont.truetype(font_folder+"/"+font_path, size)
 
@@ -57,6 +57,9 @@ def draw_image(draw, time_slot, amount, data):
 
         # Draw the text on the image at the specified position
         draw.text((x, y), text, font=font, fill=color)
+
+        if underline:
+            draw.line((x, y + text_height+15, x + text_width, y + text_height+15), fill=color, width=2)
 
     return draw
 
@@ -117,9 +120,8 @@ def process_image(image_path, json_data):
 
 # Main processing loop for images
 templates_path = './templates'
-processed_images_path = './processed_images'
 for filename in os.listdir(templates_path):
-    if filename.endswith(('.png', '.jpg', '.jpeg')) and filename not in processed_images_path:
+    if filename.endswith(('.png', '.jpg', '.jpeg')) and filename not in processed_images:
         image_path = os.path.join(templates_path, filename)
         print(f"Processing {filename}...")
         

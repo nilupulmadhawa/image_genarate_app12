@@ -8,24 +8,24 @@
             "attr_type": "number",
             "align": "right",
             "font": "ARIAL.TTF",
-            "size": 40,
-            "color": "#000000",
+            "size": 35,
+            "color": "#ffffff",
             "format": "$%0.2f",
             "underline": true,
-            "x": 202,
-            "y": 326
+            "x": 743,
+            "y": 152
         },
         {
             "attr": "date",
             "attr_type": "datetime",
             "align": "right",
             "font": "ARIAL.TTF",
-            "size": 15,
-            "color": "#000000",
+            "size": 35,
+            "color": "#ffffff",
             "format": "%Y-%m-%d",
             "underline": true,
-            "x": 309,
-            "y": 645
+            "x": 782,
+            "y": 328
         }
     ]
 }

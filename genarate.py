@@ -79,6 +79,7 @@ def draw_image(draw, time_slot, amount, data):
         size = item['size']
         color = item['color']
         format = item['format']
+        underline = item['underline']
 
         # Choose the font
         font = ImageFont.truetype(font_folder+"/"+font_path, size)
@@ -94,6 +95,8 @@ def draw_image(draw, time_slot, amount, data):
         text_bbox = draw.textbbox((0, 0), text, font=font)
         text_width = text_bbox[2] - text_bbox[0]
         text_height = text_bbox[3] - text_bbox[1]
+
+
         # Draw the text on the image
         y -= text_height
 
@@ -106,6 +109,8 @@ def draw_image(draw, time_slot, amount, data):
 
         # Draw the text on the image at the specified position
         draw.text((x, y), text, font=font, fill=color)
+        if underline:
+            draw.line((x, y + text_height+15, x + text_width, y + text_height+15), fill=color, width=2)
 
     return draw
 
@@ -172,16 +177,7 @@ for index, row in task.iterrows():
     for time_slot in time_slots:
         print(f"Task ID: {task_id} is processing at {time_slot}")
         # Randomly select a template
-        template = random.choice(tmp_task_type_template)
-        while template in tmp_used_template:
-            template = random.choice(tmp_task_type_template)
-            if len(tmp_task_type_template) == len(tmp_used_template):
-                print('All template is used for this task')
-                exit()
-                
-        tmp_used_template.append(template)
-
-
+        
         #if type is withdrwal chose from withdrwal_list A and B with presectage
         if task_type == 'deposit':
             if A_presectage_count < qty * A_presectage:
@@ -197,6 +193,31 @@ for index, row in task.iterrows():
         else:
             print('Task type not found')
             exit()
+        
+        template = random.choice(tmp_task_type_template)
+        atempt = 0
+        while template['amount_digits_max'] < len(str(amount)) and template['amount_digits_min'] > len(str(amount)):
+            template = random.choice(tmp_task_type_template)
+            atempt += 1
+            if atempt > 20:
+                print('All template is not match with amount')
+                exit()
+
+        while template in tmp_used_template:
+            atempt = 0
+            template = random.choice(tmp_task_type_template)
+            while template['amount_digits_max'] < len(str(amount)) and template['amount_digits_min'] > len(str(amount)):
+                template = random.choice(tmp_task_type_template)
+                atempt += 1
+                if atempt > 20:
+                    print('All template is not match with amount')
+                    exit()
+            if len(tmp_task_type_template) == len(tmp_used_template):
+                print('All template is used for this task')
+                exit()
+            
+                
+        tmp_used_template.append(template)
 
         if max_amount == 0:
             image = Image.open(templates_path + '/' + template['name'])
@@ -211,6 +232,8 @@ for index, row in task.iterrows():
                 amount -= max_amount
                 image = Image.open(templates_path + '/' + template['name'])
                 draw = ImageDraw.Draw(image)
+                # add random minite to time_slot 0-5
+                time_slot = time_slot + timedelta(minutes=random.randint(0, 5))
                 draw = draw_image(draw, time_slot, tmp_amount, template['data'])
                 if not os.path.exists(output_folder+"/"+str(task_id)):
                     os.makedirs(output_folder+"/"+str(task_id))
