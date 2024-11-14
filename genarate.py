@@ -101,8 +101,8 @@ def draw_image(draw, time_slot, amount, data):
             x -= text_width // 2
         elif align == "right":
             x -= text_width
-        elif align == "left":
-            x +=text_width
+        # elif align == "left":
+        #     x +=text_width
 
         # Draw the text on the image at the specified position
         draw.text((x, y), text, font=font, fill=color)

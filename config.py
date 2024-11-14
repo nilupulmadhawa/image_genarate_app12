@@ -1,174 +1,154 @@
 import cv2
 import os
 import json
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont # type: ignore
+import datetime
 import numpy as np
 
-# Path to the folder containing images
-folder_path = './templates'  # Folder containing images
-processed_images_path = './processed_images.json'  # File to store names of processed images
+click_count = 0
+positions = []
+font_folder = './fonts'
+time_slot = datetime.datetime(2024, 11, 14, 15, 30)  # Sample date and time
+amount = 1234.56  # Sample amount
 
-font_align = "right"
-font_path = "./font/ARIAL.TTF"
-color = "#000000"
-date_format = "%Y-%m-%d %I:%M %P"
-amount_font_size = 40  
-date_font_size = 15
+processed_images_json_path = './processed_images.json'  # File to store names of processed images
 
 # Load processed images from the previous run
-if os.path.exists(processed_images_path):
-    with open(processed_images_path, 'r') as f:
+if os.path.exists(processed_images_json_path):
+    with open(processed_images_json_path, 'r') as f:
         processed_images = json.load(f)
 else:
     processed_images = []
 
+def draw_image(draw, time_slot, amount, data):
+    for item in data:
+        attr_type = item['attr_type']
+        x = item['x']
+        y = item['y']
+        font_path = item['font']
+        align = item['align']
+        size = item['size']
+        color = item['color']
+        format = item['format']
+
+        # Choose the font
+        font = ImageFont.truetype(font_folder+"/"+font_path, size)
+
+        # Format the text based on the attribute
+        if attr_type == 'number':
+            text = f"{amount:0.2f}"
+        elif attr_type == 'datetime':
+            text = time_slot.strftime(format)
+        else:
+            text = ""
+
+        text_bbox = draw.textbbox((0, 0), text, font=font)
+        text_width = text_bbox[2] - text_bbox[0]
+        text_height = text_bbox[3] - text_bbox[1]
+        # Draw the text on the image
+        y -= text_height
+
+        if align == "center":
+            x -= text_width // 2
+        elif align == "right":
+            x -= text_width
+        # elif align == "left":
+        #     x +=text_width
+
+        # Draw the text on the image at the specified position
+        draw.text((x, y), text, font=font, fill=color)
+
+    return draw
+
+def preview_positions(image_path, json_data):
+    image = Image.open(image_path)
+    draw = ImageDraw.Draw(image)
+    draw = draw_image(draw, time_slot, amount, json_data['data'])
+    # preview_image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+    # cv2.imshow("Preview", preview_image)
+    image.show(title="Preview")
+
+# Click event function
 def click_event(event, x, y, flags, param):
-    global positions, click_count, image
-    # Capture click event
-    if event == cv2.EVENT_LBUTTONDOWN:
-        if click_count == 0:
-            print("Please select the 'Amount' position first.")
-            positions['amount']['x'] = x
-            positions['amount']['y'] = y
-            print(f"Amount position selected at: ({x}, {y})")
+    global click_count
+    json_data = param  # Access json_data directly from the passed parameter
+    # Check if Ctrl is held down and left mouse button is clicked
+    if event == cv2.EVENT_LBUTTONDOWN and (flags & cv2.EVENT_FLAG_CTRLKEY):
+        if click_count < len(json_data['data']):  # Ensure we only capture required clicks
+            data = json_data['data'][click_count]
+            data['x'] = x
+            data['y'] = y
+            print(f"Position selected for {data['attr']} at: ({x}, {y})")
             click_count += 1
-        elif click_count == 1 and (flags & cv2.EVENT_FLAG_CTRLKEY):  # Allow only if Ctrl is held
-            print("Now, please select the 'Date' position by holding Ctrl and clicking.")
-            positions['date']['x'] = x
-            positions['date']['y'] = y
-            print(f"Date position selected at: ({x}, {y})")
-            click_count += 1
-            display_positions(image)  # Show preview after both positions are selected
-        elif click_count == 1:
-            print("Hold the Ctrl key and click to select the 'Date' position.")
+            if click_count < len(json_data['data']):
+                print(f"Please select the position for {json_data['data'][click_count]['attr']}.")
+        else:
+            print("Hold the Ctrl key and click to select the next position.")
 
-def display_positions(image):
-    # Function to display the image with the selected text preview
-    pil_image = Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))  # Convert to RGB for PIL
-    draw = ImageDraw.Draw(pil_image)
-
-    # Load fonts with specified sizes for amount and date
-    amount_font = ImageFont.truetype(font_path, positions['amount']['size'])
-    date_font = ImageFont.truetype(font_path, positions['date']['size'])
-    x =positions['amount']['x']
-    a =positions['date']['x']
-    text = "1,200"
-    date = "07 Nov 2024 12:55 PM"
-    text_bbox = draw.textbbox((0, 0), text, font=amount_font)
-    date_bbox = draw.textbbox((0,0), date, font=date_font)
-    text_width = text_bbox[2] - text_bbox[0]
-    date_width = date_bbox[2] - date_bbox[0]
-    text_height = text_bbox[3] - text_bbox[1]
-    date_height = date_bbox[3] - date_bbox[1]
-    y = positions['amount']['y'] - (text_height) 
-    b = positions['date']['y']-(date_height)
-
-    if font_align == "center":
-        x = positions['amount']['x'] - (text_width // 2)
-    elif font_align == "right":
-        x = positions['amount']['x'] - (text_width )
-    elif font_align == "left":
-        x = positions['amount']['x'] + (text_width )
-
-    if font_align == "center":
-        a = positions['date']['x'] - (date_width // 2)
-    elif font_align == "right":
-        a = positions['date']['x'] - (date_width )
-    elif font_align == "left":
-        a = positions['date']['x'] + (date_width )    
-
-    # Draw preview text at the selected positions with different font sizes
-    draw.text((x, y), text, font=amount_font, fill=color)
-    draw.text((a, b), date, font=date_font, fill=color)
-    # draw.text((positions['date']['x'], positions['date']['y']), "07 Nov 2024 12:55 PM", font=date_font, fill=color,align='right')
-
-
-    # Convert back to OpenCV format and show the preview
-    preview_image = cv2.cvtColor(np.array(pil_image), cv2.COLOR_RGB2BGR)
-    cv2.imshow("Preview", preview_image)
+# Function to process each image and get positions
+def process_image(image_path, json_data):
+    global click_count
+    click_count = 0  # Reset click count for each image
     
-    # Add waitKey to hold the preview open until a key is pressed
-    cv2.waitKey(1)
+    image = cv2.imread(image_path)
+    if image is None:
+        print(f"Error loading image: {image_path}")
+        return None  # Skip if image loading fails
 
-    # Ask user if the preview is correct
-    response = input("Is the selection correct? (y/n): ")
-    cv2.destroyWindow("Preview")  # Close the preview window after key press
-    return response.strip().lower() == 'y'
+    print(f"Please select the position for {json_data['data'][click_count]['attr']}.")
+    cv2.imshow("Select Positions", image)
+    cv2.setMouseCallback("Select Positions", click_event, param=json_data)
 
-def process_image(image_path):
-    global positions, click_count, image
-    while True:  # Loop until correct selection is confirmed
-        click_count = 0
-
-        # Initialize positions with default values and specific font sizes
-        positions = {
-            "amount": {
-                "x": 0,
-                "y": 0,
-                "align": font_align,
-                "font": font_path,
-                "size": amount_font_size,  # Font size for amount
-                "color": color
-            },
-            "date": {
-                "a": 0,
-                "b": 0,
-                "align": font_align,
-                "font": font_path,
-                "size": date_font_size,    # Font size for date
-                "color": color,
-                "format": date_format
-            }
-        }
+    while click_count < len(json_data['data']):
+        key = cv2.waitKey(1)
         
-        # Display instructions to the user
-        print("\nInstructions:")
-        print("1. First, select the 'Amount' position by clicking once.")
-        print("2. Then, hold the Ctrl key and click to select the 'Date' position.\n")
-        
-        # Load and display the image
-        image = cv2.imread(image_path)
-        if image is None:
-            print(f"Error loading image: {image_path}")
-            return None  # Skip this image if loading fails
+        # Break if 'q' is pressed or if the window is closed
+        if key == ord('q') or cv2.getWindowProperty("Select Positions", cv2.WND_PROP_VISIBLE) < 1:
+            print("Exiting position selection early.")
+            break
+            
+    cv2.destroyAllWindows()  # Close window once done or user exits
+    
+    if click_count == len(json_data['data']):
+        preview_positions(image_path, json_data)
+        confirm = input("Are the positions correct? (y/n): ").strip().lower()
+        return json_data['data'] if confirm == 'y' else None
+    return None
 
-        cv2.imshow("Select Amount and Date Positions", image)
-        cv2.setMouseCallback("Select Amount and Date Positions", click_event)
-
-        # Wait until positions for amount and date are selected
-        while click_count < 2:
-            cv2.waitKey(1)
-
-        cv2.destroyWindow("Select Amount and Date Positions")  # Close the selection window after finishing
-
-        # Display the preview and ask for confirmation
-        if display_positions(image):
-            break  # Exit loop if selection is correct
-
-    return positions
-
-# Loop through all images in the folder
-for filename in os.listdir(folder_path):
-    if filename.endswith(('.png', '.jpg', '.jpeg')) and filename not in processed_images:
-        image_path = os.path.join(folder_path, filename)
+# Main processing loop for images
+templates_path = './templates'
+processed_images_path = './processed_images'
+for filename in os.listdir(templates_path):
+    if filename.endswith(('.png', '.jpg', '.jpeg')) and filename not in processed_images_path:
+        image_path = os.path.join(templates_path, filename)
         print(f"Processing {filename}...")
-
-        # Get positions for the current image
-        positions = process_image(image_path)
-        if positions is None:
-            continue  # Skip if the image could not be processed
         
-        # Save the positions in a separate JSON file for each image
-        output_file = os.path.join(folder_path, f"{os.path.splitext(filename)[0]}.json")
-        with open(output_file, 'w') as f:
-            json.dump(positions, f, indent=4)
-        print(f"Positions for {filename} saved to {output_file}")
+        # Check for JSON file corresponding to the image
+        file_base_name = os.path.splitext(filename)[0]
+        json_path = os.path.join(templates_path, file_base_name + '.json')
+        if not os.path.exists(json_path):
+            print(f"Error: JSON file not found for {filename}")
+            continue
+        
+        # Load the JSON file with positions
+        with open(json_path, 'r') as f:
+            json_data = json.load(f)
 
-        # Mark the image as processed
-        processed_images.append(filename)
+        while True:
+            updated_positions = process_image(image_path, json_data)
+            if updated_positions:
+                # Save the updated JSON
+                with open(json_path, 'w') as f:
+                    json.dump(json_data, f, indent=4)
+                print(f"Updated positions saved for {filename}")
+                processed_images.append(filename)
+                break
+            else:
+                print(f"Re-running selection for {filename}...")
+
 
 # Update the processed images file to avoid repeat selections in future runs
-with open(processed_images_path, 'w') as f:
+with open(processed_images_json_path, 'w') as f:
     json.dump(processed_images, f, indent=4)
 
 print("Processing complete. Positions saved individually for each image.")
