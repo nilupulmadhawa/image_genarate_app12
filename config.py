@@ -36,7 +36,7 @@ def draw_image(draw, time_slot, amount, data):
 
         # Format the text based on the attribute
         if attr_type == 'number':
-            text = f"{amount:0.2f}"
+            text = format % amount
         elif attr_type == 'datetime':
             text = time_slot.strftime(format)
         else:

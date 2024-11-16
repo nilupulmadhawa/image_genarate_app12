@@ -10,10 +10,10 @@
             "font": "ARIAL.TTF",
             "size": 40,
             "color": "#000000",
-            "format": "$%0.2f",
+            "format": "$%0.0f",
             "underline": false,
-            "x": 199,
-            "y": 327
+            "x": 201,
+            "y": 334
         },
         {
             "attr": "date",
@@ -24,8 +24,8 @@
             "color": "#000000",
             "format": "%Y-%m-%d",
             "underline": false,
-            "x": 312,
-            "y": 647
+            "x": 308,
+            "y": 641
         }
     ]
 }

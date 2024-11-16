@@ -12,8 +12,8 @@
             "color": "#ffffff",
             "format": "$%0.2f",
             "underline": true,
-            "x": 759,
-            "y": 155
+            "x": 761,
+            "y": 164
         },
         {
             "attr": "date",
@@ -24,8 +24,8 @@
             "color": "#ffffff",
             "format": "%Y-%m-%d",
             "underline": true,
-            "x": 786,
-            "y": 332
+            "x": 791,
+            "y": 329
         }
     ]
 }
