@@ -4,6 +4,8 @@ import json
 from PIL import Image, ImageDraw, ImageFont # type: ignore
 import datetime
 import numpy as np
+import random
+
 
 click_count = 0
 positions = []
@@ -63,13 +65,24 @@ def draw_image(draw, time_slot, amount, data):
 
     return draw
 
+
 def preview_positions(image_path, json_data):
     image = Image.open(image_path)
     draw = ImageDraw.Draw(image)
+    amount_digits_max =json_data['amount_digits_max']
+    amount_digits_min =json_data['amount_digits_min']
+
+    min_value = 10**(amount_digits_min - 1)
+    max_value = 10**amount_digits_max - 1
+
+    amount = random.randint(min_value, max_value)
+
     draw = draw_image(draw, time_slot, amount, json_data['data'])
     # preview_image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
     # cv2.imshow("Preview", preview_image)
     image.show(title="Preview")
+
+
 
 # Click event function
 def click_event(event, x, y, flags, param):
