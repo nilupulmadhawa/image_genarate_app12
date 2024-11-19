@@ -4,12 +4,13 @@ import json
 from PIL import Image, ImageDraw, ImageFont # type: ignore
 import datetime
 import numpy as np
+from googletrans import Translator
 
 click_count = 0
 positions = []
 font_folder = './fonts'
 time_slot = datetime.datetime(2024, 11, 14, 15, 30)  # Sample date and time
-amount = 1234.56  # Sample amount
+amount = 123.56  # Sample amount
 
 processed_images_json_path = './processed_images.json'  # File to store names of processed images
 
@@ -22,6 +23,7 @@ else:
 
 def draw_image(draw, time_slot, amount, data):
     for item in data:
+        # attr=item['attr']
         attr_type = item['attr_type']
         x = item['x']
         y = item['y']
@@ -31,8 +33,10 @@ def draw_image(draw, time_slot, amount, data):
         color = item['color']
         format = item['format']
         underline = item['underline']
+        language = item['language']
         # Choose the font
         font = ImageFont.truetype(font_folder+"/"+font_path, size)
+
 
         # Format the text based on the attribute
         if attr_type == 'number':
@@ -41,6 +45,19 @@ def draw_image(draw, time_slot, amount, data):
             text = time_slot.strftime(format)
         else:
             text = ""
+
+        #language selection
+        if language != "en" and text:  # Only translate if there's text to translate
+            try:
+                translator = Translator()
+                print(f"Original text: {text}")
+                translated_text = translator.translate(str(text), dest=language)
+                text = translated_text.text
+                print(f"Translated text: {text}")
+            except Exception as e:
+                print(f"Error during translation: {e}")
+                # Handle error, fallback to original text
+                exit()
 
         text_bbox = draw.textbbox((0, 0), text, font=font)
         text_width = text_bbox[2] - text_bbox[0]

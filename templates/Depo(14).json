@@ -1,0 +1,20 @@
+{
+    "type": "deposit",
+    "amount_digits_max": 2,
+    "amount_digits_min": 2,
+    "data": [
+        {
+            "attr": "amount",
+            "attr_type": "number",
+            "align": "right",
+            "font": "LEELAWAD.TTF",
+            "size": 56.65,
+            "color": "#020202",
+            "format": "%d",
+            "underline": false,
+            "language": "en",
+            "x": 156,
+            "y": 309
+        }
+    ]
+}

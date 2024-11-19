@@ -1,0 +1,20 @@
+{
+    "type": "deposit",
+    "amount_digits_max": 6,
+    "amount_digits_min": 1,
+    "data": [
+        {
+            "attr": "amount",
+            "attr_type": "number",
+            "align": "right",
+            "font": "ROBOTO-REGULAR.TTF",
+            "size": 29.9,
+            "color": "#000002",
+            "format": "%0.1f",
+            "underline": false,
+            "language": "en",
+            "x": 556,
+            "y": 219
+        }
+    ]
+}
