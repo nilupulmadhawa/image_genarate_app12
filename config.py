@@ -10,7 +10,7 @@ click_count = 0
 positions = []
 font_folder = './fonts'
 time_slot = datetime.datetime(2024, 11, 14, 15, 30)  # Sample date and time
-amount = 123.56  # Sample amount
+amount = 12300 # Sample amount
 
 processed_images_json_path = './processed_images.json'  # File to store names of processed images
 
