@@ -1,0 +1,20 @@
+{
+    "type": "withdrwal",
+    "amount_digits_max": 2,
+    "amount_digits_min": 2,
+    "data": [
+        {
+            "attr": "amount",
+            "attr_type": "number",
+            "align": "right",
+            "font": "ROBOTO-BOLD.TTF",
+            "size": 24.48,
+            "color": "#c6c6c6",
+            "format": "{:.2f}",
+            "underline": false,
+            "language": "en",
+            "x": 330,
+            "y": 44
+        }
+    ]
+}
