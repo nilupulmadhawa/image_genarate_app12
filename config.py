@@ -5,12 +5,14 @@ from PIL import Image, ImageDraw, ImageFont # type: ignore
 import datetime
 import numpy as np
 from googletrans import Translator
+import random
+
 
 click_count = 0
 positions = []
 font_folder = './fonts'
 time_slot = datetime.datetime(2024, 11, 14, 15, 30)  # Sample date and time
-amount = 123.56  # Sample amount
+# amount = 123.56  # Sample amount
 
 processed_images_json_path = './processed_images.json'  # File to store names of processed images
 
@@ -83,6 +85,13 @@ def draw_image(draw, time_slot, amount, data):
 def preview_positions(image_path, json_data):
     image = Image.open(image_path)
     draw = ImageDraw.Draw(image)
+    amount_digits_max =json_data['amount_digits_max']
+    amount_digits_min =json_data['amount_digits_min']
+
+    min_value = 10**(amount_digits_min - 1)
+    max_value = 10**amount_digits_max - 1
+
+    amount = random.randint(min_value, max_value)
     draw = draw_image(draw, time_slot, amount, json_data['data'])
     # preview_image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
     # cv2.imshow("Preview", preview_image)
@@ -145,7 +154,7 @@ def process_image(image_path, json_data):
     return None
 
 # Main processing loop for images
-templates_path = './templates'
+templates_path = './templates/res'
 for filename in os.listdir(templates_path):
     if filename.endswith(('.png', '.jpg', '.jpeg')) and filename not in processed_images:
         image_path = os.path.join(templates_path, filename)
