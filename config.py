@@ -154,7 +154,7 @@ def process_image(image_path, json_data):
     return None
 
 # Main processing loop for images
-templates_path = './templates/res'
+templates_path = './templates'
 for filename in os.listdir(templates_path):
     if filename.endswith(('.png', '.jpg', '.jpeg')) and filename not in processed_images:
         image_path = os.path.join(templates_path, filename)
