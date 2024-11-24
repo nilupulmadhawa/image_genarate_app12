@@ -33,10 +33,14 @@ def draw_image(draw, time_slot, amount, data):
         size = item['size']
         color = item['color']
         format = item['format']
-        underline = item['underline']
-        language = item['language']
+        underline = item['underline'] if 'underline' in item else False
+        language = item['language'] if 'language' in item else 'en'
         underline_margin = item['underline_margin'] if 'underline_margin' in item else 10
         time_pre_language = item['time_pre_language'] if 'time_pre_language' in item else 'en'
+        txt = item['text'] if 'text' in item else ''
+        pre_text = item['pre_text'] if 'pre_text' in item else ''
+        post_text = item['post_text'] if 'post_text' in item else ''
+
         # Choose the font
         font = ImageFont.truetype(font_folder+"/"+font_path, size)
 
@@ -47,7 +51,7 @@ def draw_image(draw, time_slot, amount, data):
         elif attr_type == 'datetime':
             text = time_slot.strftime(format)
         else:
-            text = ""
+            text = txt
 
         #language selection
         if language != "en" and text:  # Only translate if there's text to translate
@@ -64,6 +68,11 @@ def draw_image(draw, time_slot, amount, data):
                 print(f"Error during translation: {e}")
                 # Handle error, fallback to original text
                 exit()
+        
+        if pre_text:
+            text = pre_text + text
+        if post_text:
+            text = text + post_text
 
         text_bbox = draw.textbbox((0, 0), text, font=font)
         text_width = text_bbox[2] - text_bbox[0]

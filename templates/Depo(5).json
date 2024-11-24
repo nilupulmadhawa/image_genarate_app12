@@ -10,7 +10,7 @@
             "font": "ebrimabd.ttf",
             "size": 87.98,
             "color": "#e30500",
-            "format": "%d",
+            "format": "{:.0f}",
             "underline": false,
             "language": "en",
             "x": 344,

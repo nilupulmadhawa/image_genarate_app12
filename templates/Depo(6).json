@@ -1,20 +1,20 @@
 {
     "type": "deposit",
     "amount_digits_max": 5,
-    "amount_digits_min": 2,
+    "amount_digits_min": 3,
     "data": [
         {
             "attr": "amount",
             "attr_type": "number",
             "align": "right",
-            "font": "LEELAWAD.TTF",
+            "font": "ROBOTO-MEDIUM.TTF",
             "size": 61.29,
             "color": "#1f1f1f",
-            "format": "1,234",
+            "format": "{:,}",
             "underline": false,
             "language": "en",
-            "x": 0,
-            "y": 0
+            "x": 264,
+            "y": 267
         }
     ]
 }

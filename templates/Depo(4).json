@@ -10,7 +10,7 @@
             "font": "calibri.ttf",
             "size": 61.17,
             "color": "#171717",
-            "format": "%0.2f",
+            "format": "{:.2f}",
             "underline": false,
             "language": "en",
             "x": 112,

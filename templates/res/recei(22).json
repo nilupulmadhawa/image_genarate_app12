@@ -1,0 +1,33 @@
+{
+    "type": "withdrwal",
+    "amount_digits_max": 5,
+    "amount_digits_min": 5,
+    "data": [
+        {
+            "attr": "amount",
+            "attr_type": "number",
+            "align": "right",
+            "font": "ARIAL.TTF",
+            "size": 22.95,
+            "color": "#d2d2d4",
+            "format": "{:.2f}",
+            "underline": false,
+            "language": "en",
+            "x": 303,
+            "y": 81
+        },
+        {
+            "attr": "time",
+            "attr_type": "datetime",
+            "align": "center",
+            "font": "ROBOTO-REGULAR.TTF",
+            "size": 15,
+            "color": "#888888",
+            "format": "Today %I:%M %p",
+            "underline": false,
+            "language": "en",
+            "x": 289,
+            "y": 30
+        }
+    ]
+}

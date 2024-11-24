@@ -1,20 +1,20 @@
 {
     "type": "deposit",
-    "amount_digits_max": 2,
-    "amount_digits_min": 2,
+    "amount_digits_max": 5,
+    "amount_digits_min": 4,
     "data": [
         {
             "attr": "amount",
             "attr_type": "number",
             "align": "right",
-            "font": "LEELAWAD.TTF",
-            "size": 11.82,
-            "color": "#060606",
+            "font": "ROBOTO-MEDIUM.TTF",
+            "size": 45.66,
+            "color": "#090909",
             "format": "{:,}",
             "underline": false,
             "language": "en",
-            "x": 0,
-            "y": 0
+            "x": 200,
+            "y": 335
         },
         {
             "attr": "datetime",
@@ -23,11 +23,11 @@
             "font": "LEELAWUI.ttf",
             "size": 15.76,
             "color": "#121317",
-            "format": "%d %b %Y %H:%M",
+            "format": "%d %b %Y %I:%M %p",
             "underline": false,
             "language": "en",
-            "x": 0,
-            "y": 0
+            "x": 27,
+            "y": 652
         }
     ]
 }

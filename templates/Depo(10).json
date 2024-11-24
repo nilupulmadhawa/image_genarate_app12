@@ -10,7 +10,7 @@
             "font": "ROBOTO-LIGHT.TTF",
             "size": 18.41,
             "color": "#161618",
-            "format": "%0.2f",
+            "format": "{:.2f}",
             "underline": false,
             "language": "en",
             "x": 207,

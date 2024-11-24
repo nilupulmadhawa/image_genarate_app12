@@ -10,7 +10,7 @@
             "font": "ARIAL.TTF",
             "size": 32.1999,
             "color": "#801d32",
-            "format": "%0.2f",
+            "format": "{:.2f}",
             "underline": false,
             "language": "en",
             "x": 520,

@@ -10,7 +10,7 @@
             "font": "TubqalPro-Medium.otf",
             "size": 24.3,
             "color": "#2e2e2e",
-            "format": "%0.2f",
+            "format": "{:.2f}",
             "underline": false,
             "language": "en",
             "x": 409,

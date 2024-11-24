@@ -6,6 +6,8 @@ import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
 import random
+from googletrans import Translator
+import random
 
 # set output date
 date = datetime(2018, 6, 1)
@@ -71,6 +73,7 @@ def generate_time_slots(start_time, qty, gap):
 
 def draw_image(draw, time_slot, amount, data):
     for item in data:
+        # attr=item['attr']
         attr_type = item['attr_type']
         x = item['x']
         y = item['y']
@@ -79,31 +82,52 @@ def draw_image(draw, time_slot, amount, data):
         size = item['size']
         color = item['color']
         format = item['format']
-        underline = item['underline']
+        underline = item['underline'] if 'underline' in item else False
+        language = item['language'] if 'language' in item else 'en'
         underline_margin = item['underline_margin'] if 'underline_margin' in item else 10
         time_pre_language = item['time_pre_language'] if 'time_pre_language' in item else 'en'
+        txt = item['text'] if 'text' in item else ''
+        pre_text = item['pre_text'] if 'pre_text' in item else ''
+        post_text = item['post_text'] if 'post_text' in item else ''
 
         # Choose the font
         font = ImageFont.truetype(font_folder+"/"+font_path, size)
+
 
         # Format the text based on the attribute
         if attr_type == 'number':
             text = format.format(amount)
         elif attr_type == 'datetime':
             text = time_slot.strftime(format)
-            if time_pre_language == "ar":
-                am_pm_map = {"AM": "ص", "PM": "م"}
-                text = text.replace("AM", am_pm_map["AM"]).replace("PM", am_pm_map["PM"])
         else:
-            text = ""
+            text = txt
+
+        #language selection
+        if language != "en" and text:  # Only translate if there's text to translate
+            try:
+                translator = Translator()
+                print(f"Original text: {text}")
+                translated_text = translator.translate(str(text), dest=language)
+                text = translated_text.text
+                print(f"Translated text: {text}")
+                if time_pre_language == "ar":
+                    am_pm_map = {"AM": "ص", "PM": "م"}
+                    text = text.replace("AM", am_pm_map["AM"]).replace("PM", am_pm_map["PM"])
+            except Exception as e:
+                print(f"Error during translation: {e}")
+                # Handle error, fallback to original text
+                exit()
+        
+        if pre_text:
+            text = pre_text + text
+        if post_text:
+            text = text + post_text
 
         text_bbox = draw.textbbox((0, 0), text, font=font)
         text_width = text_bbox[2] - text_bbox[0]
         text_height = text_bbox[3] - text_bbox[1]
-
-
         # Draw the text on the image
-        y -= text_height+5
+        y -= text_height +5
 
         if align == "center":
             x -= text_width // 2
@@ -114,11 +138,11 @@ def draw_image(draw, time_slot, amount, data):
 
         # Draw the text on the image at the specified position
         draw.text((x, y), text, font=font, fill=color)
+
         if underline:
             draw.line((x, y + text_height+underline_margin, x + text_width, y + text_height+underline_margin), fill=color, width=2)
 
     return draw
-
 
 # Load resources
 task = pd.read_csv(resources_folder + '/task.csv', delimiter='\t')
@@ -150,13 +174,16 @@ for index, row in task.iterrows():
     task_id = row['task_id']
     start_time = row['from']
     end_time = row['to']
-    task_type = row['task_type']
+    task_type = tp = row['task_type']
+    if tp == 'bonus':
+        tp = 'withdrwal'
+
     gap = row['gap']
     qty = row['qty']
     max_amount= row['max']
     print(f"Task ID: {task_id} is processing with {qty} images")
 
-    tmp_task_type_template = list(filter(lambda x: x['type'] == task_type, images_list))
+    tmp_task_type_template = list(filter(lambda x: x['type'] == tp, images_list))
     tmp_used_template = []
     if len(tmp_task_type_template) < qty:
         print(f"{task_type} template not enough")

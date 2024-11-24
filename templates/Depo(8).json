@@ -7,14 +7,27 @@
             "attr": "amount",
             "attr_type": "number",
             "align": "right",
-            "font": "LEELAWAD.TTF",
-            "size": 61.31,
+            "font": "ROBOTO-MEDIUM.TTF",
+            "size": 45.31,
             "color": "#020202",
-            "format": "",
+            "format": "{:,}",
             "underline": false,
             "language": "en",
-            "x": 0,
-            "y": 0
+            "x": 190,
+            "y": 325
+        },
+        {
+            "attr": "datetime",
+            "attr_type": "datetime",
+            "align": "left",
+            "font": "ROBOTO-MEDIUM.ttf",
+            "size": 12.76,
+            "color": "#121317",
+            "format": "%d %b %Y %I:%M %p",
+            "underline": false,
+            "language": "en",
+            "x": 22,
+            "y": 650
         }
     ]
 }
