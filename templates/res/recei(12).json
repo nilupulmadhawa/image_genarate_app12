@@ -1,0 +1,48 @@
+{
+    "type": "withdrwal",
+    "amount_digits_max": 4,
+    "amount_digits_min": 4,
+    "data": [
+        {
+            "attr": "amount",
+            "attr_type": "number",
+            "align": "right",
+            "font": "LEELAWAD.TTF",
+            "size": 36.5,
+            "color": "#dfdee3",
+            "format": "{:.1f}",
+            "underline": false,
+            "language": "en",
+            "x": 576,
+            "y": 186
+        },
+        {
+            "attr": "uptime",
+            "attr_type": "datetime",
+            "align": "center",
+            "font": "Al-QuranAlKareem Regular.TTF",
+            "size": 29.23,
+            "color": "#d1d1d9",
+            "format": "%p %I:%M",
+            "time_pre_language": "ar",
+            "underline": false,
+            "language": "en",
+            "x": 400,
+            "y": 103
+        },
+        {
+            "attr": "dtime",
+            "attr_type": "datetime",
+            "align": "left",
+            "font": "Al-QuranAlKareem Regular.TTF",
+            "size": 29.23,
+            "color": "#d1d1d9",
+            "format": "%p %I:%M",
+            "time_pre_language": "ar",
+            "underline": false,
+            "language": "en",
+            "x": 693,
+            "y": 409
+        }
+    ]
+}

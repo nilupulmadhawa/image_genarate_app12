@@ -1,0 +1,46 @@
+{
+    "type": "withdrwal",
+    "amount_digits_max": 4,
+    "amount_digits_min": 4,
+    "data": [
+        {
+            "attr": "amount",
+            "attr_type": "number",
+            "align": "right",
+            "font": "ROBOTO-MEDIUM.TTF",
+            "size": 17.5,
+            "color": "#373739",
+            "format": "{:.1f}",
+            "underline": false,
+            "language": "en",
+            "x": 210,
+            "y": 162
+        },
+        {
+            "attr": "date",
+            "attr_type": "datetime",
+            "align": "right",
+            "font": "ROBOTO-MEDIUM.TTF",
+            "size": 17.5,
+            "color": "#373739",
+            "format": "%d-%m-%y %H:%M",
+            "underline": false,
+            "language": "en",
+            "x": 217,
+            "y": 224
+        },
+        {
+            "attr": "time",
+            "attr_type": "datetime",
+            "align": "center",
+            "font": "ROBOTO-MEDIUM.TTF",
+            "size": 10.71,
+            "color": "#aaaaaa",
+            "format": "Today %I:%M %p",
+            "underline": false,
+            "language": "en",
+            "x": 196,
+            "y": 134
+        }
+    ]
+}

@@ -1,0 +1,61 @@
+{
+    "type": "withdrwal",
+    "amount_digits_max": 2,
+    "amount_digits_min": 2,
+    "data": [
+        {
+            "attr": "amount",
+            "attr_type": "number",
+            "align": "right",
+            "font": "ARIAL.TTF",
+            "size": 45,
+            "color": "#f5dcd8",
+            "format": "{:.1f}",
+            "underline": false,
+            "language": "en",
+            "x": 394,
+            "y": 249
+        },
+        {
+            "attr": "utime",
+            "attr_type": "datetime",
+            "align": "center",
+            "font": "ARIAL.TTF",
+            "size": 30,
+            "color": "#f5dcd8",
+            "format": "%I:%M %p",
+            "underline": false,
+            "language": "en",
+            "x": 360,
+            "y": 148
+        },
+        {
+            "attr": "dtime",
+            "attr_type": "datetime",
+            "align": "right",
+            "font": "ARIAL.TTF",
+            "size": 45,
+            "color": "#f5dcd8",
+            "format": "%H:%M",
+            "underline": true,
+            "underline_margin": 15,
+            "language": "en",
+            "x": 617,
+            "y": 500
+        },
+        {
+            "attr": "date",
+            "attr_type": "datetime",
+            "align": "right",
+            "font": "ARIAL.TTF",
+            "size": 45,
+            "color": "#f5dcd8",
+            "format": "%d-%m-%y",
+            "underline": true,
+            "underline_margin": 15,
+            "language": "en",
+            "x": 219,
+            "y": 435
+        }
+    ]
+}

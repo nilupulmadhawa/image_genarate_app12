@@ -6,6 +6,7 @@ import datetime
 import numpy as np
 from googletrans import Translator
 import random
+import locale
 
 click_count = 0
 positions = []
@@ -36,6 +37,7 @@ def draw_image(draw, time_slot, amount, data):
         underline = item['underline']
         language = item['language']
         underline_margin = item['underline_margin'] if 'underline_margin' in item else 10
+        time_pre_language = item['time_pre_language'] if 'time_pre_language' in item else 'en'
         # Choose the font
         font = ImageFont.truetype(font_folder+"/"+font_path, size)
 
@@ -45,8 +47,13 @@ def draw_image(draw, time_slot, amount, data):
             text = format.format(amount)
         elif attr_type == 'datetime':
             text = time_slot.strftime(format)
+            if time_pre_language == "ar":
+                am_pm_map = {"AM": "ص", "PM": "م"}
+                text = text.replace("AM", am_pm_map["AM"]).replace("PM", am_pm_map["PM"])
         else:
             text = ""
+
+
 
         #language selection
         if language != "en" and text:  # Only translate if there's text to translate
@@ -99,7 +106,7 @@ def preview_positions(image_path, json_data):
 
 
 
-img ="recei(6)"
+img ="recei(14)"
 
 # Main processing loop for images
 templates_path = './templates/res'
