@@ -5,12 +5,13 @@ from PIL import Image, ImageDraw, ImageFont # type: ignore
 import datetime
 import numpy as np
 from googletrans import Translator
+import random
 
 click_count = 0
 positions = []
 font_folder = './fonts'
 time_slot = datetime.datetime(2024, 11, 14, 15, 30)  # Sample date and time
-amount = 12300 # Sample amount
+
 
 processed_images_json_path = './processed_images.json'  # File to store names of processed images
 
@@ -34,6 +35,7 @@ def draw_image(draw, time_slot, amount, data):
         format = item['format']
         underline = item['underline']
         language = item['language']
+        underline_margin = item['underline_margin'] if 'underline_margin' in item else 10
         # Choose the font
         font = ImageFont.truetype(font_folder+"/"+font_path, size)
 
@@ -76,13 +78,20 @@ def draw_image(draw, time_slot, amount, data):
         draw.text((x, y), text, font=font, fill=color)
 
         if underline:
-            draw.line((x, y + text_height+10, x + text_width, y + text_height+10), fill=color, width=2)
+            draw.line((x, y + text_height+underline_margin, x + text_width, y + text_height+underline_margin), fill=color, width=2)
 
     return draw
 
 def preview_positions(image_path, json_data):
     image = Image.open(image_path)
     draw = ImageDraw.Draw(image)
+    amount_digits_max =json_data['amount_digits_max']
+    amount_digits_min =json_data['amount_digits_min']
+
+    min_value = 10**(amount_digits_min - 1)
+    max_value = 10**amount_digits_max - 1
+
+    amount = random.randint(min_value, max_value)
     draw = draw_image(draw, time_slot, amount, json_data['data'])
     # preview_image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
     # cv2.imshow("Preview", preview_image)

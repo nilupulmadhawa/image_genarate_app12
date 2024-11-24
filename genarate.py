@@ -80,6 +80,7 @@ def draw_image(draw, time_slot, amount, data):
         color = item['color']
         format = item['format']
         underline = item['underline']
+        underline_margin = item['underline_margin'] if 'underline_margin' in item else 10
 
         # Choose the font
         font = ImageFont.truetype(font_folder+"/"+font_path, size)
@@ -110,7 +111,7 @@ def draw_image(draw, time_slot, amount, data):
         # Draw the text on the image at the specified position
         draw.text((x, y), text, font=font, fill=color)
         if underline:
-            draw.line((x, y + text_height+13, x + text_width, y + text_height+13), fill=color, width=2)
+            draw.line((x, y + text_height+underline_margin, x + text_width, y + text_height+underline_margin), fill=color, width=2)
 
     return draw
 
