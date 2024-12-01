@@ -10,7 +10,7 @@
             "font": "ROBOTO-REGULAR.TTF",
             "size": 29.9,
             "color": "#000002",
-            "format": "%0.1f",
+            "format": "{:.1f}",
             "underline": false,
             "language": "en",
             "x": 556,

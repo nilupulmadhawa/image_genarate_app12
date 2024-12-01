@@ -1,13 +1,13 @@
-task_id	from	to	task_type	gap	qty	max
-1	12:05	1:05	deposit	    5	5	0
-2	1:05	1:45	withdrawal	5	5	0
-3	1:45	1:55	withdrawal	5	5	68
-4	2:50	3:50	deposit	    5	5	0
-5	3:50	4:30	withdrawal	5	5	0
-6	4:30	4:40	withdrawal	5	5	118
-7	5:35	6:35	deposit	    5	5	0
-8	6:35	7:15	withdrawal	5	5	0
-9	7:15	7:25	withdrawal	5	5	188
-10	8:20	9:20	deposit	    5	5	0
-11	9:20	10:00	withdrawal	5	5	0
-12	10:00	10:10	withdrawal	5	5	388
+task_id,from,to,task_type,gap,qty,max
+1,0:05,1:05,deposit,5,5,0
+2,1:05,1:45,withdrawal,5,5,0
+3,1:45,1:55,withdrawal,5,5,0
+4,2:50,3:50,deposit,5,5,0
+5,3:50,4:30,withdrawal,5,5,0
+6,4:30,4:40,withdrawal,5,5,0
+7,5:35,6:35,deposit,5,5,0
+8,6:35,7:15,withdrawal,5,5,0
+9,7:15,7:25,withdrawal,5,5,0
+10,8:20,9:20,deposit,5,5,0
+11,9:20,10:00,withdrawal,5,5,0
+12,10:00,10:10,withdrawal,5,5,0
