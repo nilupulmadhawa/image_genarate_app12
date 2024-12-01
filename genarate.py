@@ -49,7 +49,7 @@ def can_fit_tasks(row):
     end_time = datetime.strptime(row['to'], '%H:%M')
     total_duration = (end_time - start_time).seconds / 60
     required_duration = row['qty'] * row['gap']
-    return required_duration > total_duration
+    return required_duration <= total_duration
 
 def generate_random_time_slots(start_time, end_time, qty):
     random_times = []
@@ -195,6 +195,7 @@ for index, row in task.iterrows():
     end_time = date.replace(hour=end_time.hour, minute=end_time.minute)
 
     is_random = can_fit_tasks(row)
+
     time_slots = []
     if is_random:
         # Generate random times for the given qty
