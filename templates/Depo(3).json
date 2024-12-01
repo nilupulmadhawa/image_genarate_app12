@@ -1,19 +1,19 @@
 {
     "type": "deposit",
     "amount_digits_max": 5,
-    "amount_digits_min": 2,
+    "amount_digits_min": 5,
     "data": [
         {
             "attr": "amount",
             "attr_type": "number",
             "align": "right",
             "font": "TubqalPro-Medium.otf",
-            "size": 24.3,
+            "size": 24,
             "color": "#2e2e2e",
-            "format": "{:.2f}",
+            "format": "{:.1f}",
             "underline": false,
             "language": "en",
-            "x": 409,
+            "x": 445,
             "y": 284
         }
     ]

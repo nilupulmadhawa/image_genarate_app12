@@ -1,7 +1,7 @@
 {
     "type": "deposit",
-    "amount_digits_max": 5,
-    "amount_digits_min": 2,
+    "amount_digits_max": 4,
+    "amount_digits_min": 4,
     "data": [
         {
             "attr": "amount",
@@ -10,11 +10,11 @@
             "font": "calibri.ttf",
             "size": 61.17,
             "color": "#171717",
-            "format": "{:.2f}",
+            "format": "{:,}",
             "underline": false,
             "language": "en",
-            "x": 112,
-            "y": 351
+            "x": 225,
+            "y": 385
         }
     ]
 }

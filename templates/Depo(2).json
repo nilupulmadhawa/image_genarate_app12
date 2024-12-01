@@ -1,7 +1,7 @@
 {
     "type": "deposit",
-    "amount_digits_max": 5,
-    "amount_digits_min": 2,
+    "amount_digits_max": 4,
+    "amount_digits_min": 3,
     "data": [
         {
             "attr": "amount",
@@ -13,8 +13,8 @@
             "format": "{:.2f}",
             "underline": false,
             "language": "en",
-            "x": 520,
-            "y": 358
+            "x": 610,
+            "y": 598
         },
         {
             "attr": "date_with_month",
@@ -22,12 +22,12 @@
             "align": "right",
             "font": "ARIAL.TTF",
             "size": 30.89,
-            "color": "#1c1c1c",
+            "color": "#464646",
             "format": "%Y %B",
             "underline": false,
             "language": "ar",
-            "x": 520,
-            "y": 368
+            "x": 792,
+            "y": 415
         },
         {
             "attr": "date",
@@ -39,21 +39,22 @@
             "format": "%d/%m/%Y",
             "underline": false,
             "language": "en",
-            "x": 520,
-            "y": 375
+            "x": 109,
+            "y": 538
         },
         {
             "attr": "time",
             "attr_type": "datetime",
             "align": "left",
-            "font": "BOUTROS_ADS_PRO_MEDIUM.TTF",
+            "font": "ARIAL.TTF",
             "size": 23.98,
-            "color": "#1c1c1c",
-            "format": "%p%I:%M",
+            "color": "#272727",
+            "format": "%p %I:%M",
             "underline": false,
             "language": "ar",
-            "x": 519,
-            "y": 387
+            "time_pre_language": "ar",
+            "x": 109,
+            "y": 575
         }
     ]
 }
