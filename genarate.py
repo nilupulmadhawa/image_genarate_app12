@@ -145,10 +145,10 @@ def draw_image(draw, time_slot, amount, data):
     return draw
 
 # Load resources
-task = pd.read_csv(resources_folder + '/task.csv', delimiter='\t')
+task = pd.read_csv(resources_folder + '/task.csv')
 deposit_list_A = load_csv_array(resources_folder + '/deposit_list_A.csv')
 deposit_list_B = load_csv_array(resources_folder + '/deposit_list_B.csv')
-withdrwal_list = load_csv_array(resources_folder + '/withdrwal_list.csv')
+withdrawal_list = load_csv_array(resources_folder + '/withdrawal_list.csv')
 bonus_list = load_csv_array(resources_folder + '/bonus.csv')
 
 # Load processed_images.json file
@@ -176,7 +176,7 @@ for index, row in task.iterrows():
     end_time = row['to']
     task_type = tp = row['task_type']
     if tp == 'bonus':
-        tp = 'withdrwal'
+        tp = 'withdrawal'
 
     gap = row['gap']
     qty = row['qty']
@@ -210,7 +210,7 @@ for index, row in task.iterrows():
         print(f"Task ID: {task_id} is processing at {time_slot}")
         # Randomly select a template
         
-        #if type is withdrwal chose from withdrwal_list A and B with presectage
+        #if type is withdrawal chose from withdrawal_list A and B with presectage
         if task_type == 'deposit':
             if A_presectage_count < qty * A_presectage:
                 amount = random.choice(deposit_list_A)
@@ -218,39 +218,51 @@ for index, row in task.iterrows():
             else:
                 amount = random.choice(deposit_list_B)
                 B_presectage_count += 1
-        elif task_type == 'withdrwal':
-            amount = random.choice(withdrwal_list)
+        elif task_type == 'withdrawal':
+            amount = random.choice(withdrawal_list)
         elif task_type == 'bonus':
-            amount = random.choice(bonus_list)
+            amount = max_amount
         else:
             print('Task type not found')
             exit()
         
-        template = random.choice(tmp_task_type_template)
-        atempt = 0
-        while template['amount_digits_max'] < len(str(amount)) and template['amount_digits_min'] > len(str(amount)):
-            template = random.choice(tmp_task_type_template)
-            atempt += 1
-            if atempt > 20:
-                print('All template is not match with amount')
-                exit()
+        # Filter valid templates
+        valid_templates = [
+            t for t in tmp_task_type_template
+            if t['amount_digits_min'] <= len(str(amount)) <= t['amount_digits_max'] and t not in tmp_used_template
+        ]
 
-        while template in tmp_used_template:
-            atempt = 0
-            template = random.choice(tmp_task_type_template)
-            while template['amount_digits_max'] < len(str(amount)) and template['amount_digits_min'] > len(str(amount)):
-                template = random.choice(tmp_task_type_template)
-                atempt += 1
-                if atempt > 20:
-                    print('All template is not match with amount')
-                    exit()
-            if len(tmp_task_type_template) == len(tmp_used_template):
-                print('All template is used for this task')
-                exit()
+        if not valid_templates:
+            print('No template matches the amount')
+            exit()
+
+        # Randomly choose a valid template
+        template = random.choice(valid_templates)
+        # template = random.choice(tmp_task_type_template)
+        # atempt = 0
+        # while template['amount_digits_max'] >= len(str(amount)) and template['amount_digits_min'] <= len(str(amount)):
+        #     template = random.choice(tmp_task_type_template)
+        #     atempt += 1
+        #     if atempt > 20:
+        #         print('All template is not match with amount')
+        #         exit()
+      
+        # while template in tmp_used_template:
+        #     atempt = 0
+        #     template = random.choice(tmp_task_type_template)
+        #     while template['amount_digits_max'] >= len(str(amount)) and template['amount_digits_min'] <= len(str(amount)):
+        #         template = random.choice(tmp_task_type_template)
+        #         atempt += 1
+        #         if atempt > 20:
+        #             print('All template is not match with amount')
+        #             exit()
+        #     if len(tmp_task_type_template) == len(tmp_used_template):
+        #         print('All template is used for this task')
+        #         exit()
             
                 
         tmp_used_template.append(template)
-
+       
         if max_amount == 0:
             image = Image.open(templates_path + '/' + template['name'])
             draw = ImageDraw.Draw(image)

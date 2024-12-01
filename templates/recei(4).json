@@ -1,5 +1,5 @@
 {
-    "type": "withdrwal",
+    "type": "withdrawal",
     "amount_digits_max": 3,
     "amount_digits_min": 3,
     "data": [
