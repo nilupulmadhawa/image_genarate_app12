@@ -7,7 +7,7 @@
             "attr": "amount",
             "attr_type": "number",
             "align": "right",
-            "font": "calibri.ttf",
+            "font": "ROBOTO-MEDIUM.ttf",
             "size": 61.17,
             "color": "#171717",
             "format": "{:,}",

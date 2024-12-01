@@ -7,14 +7,14 @@
             "attr": "amount",
             "attr_type": "number",
             "align": "right",
-            "font": "ROBOTO-MEDIUM.TTF",
+            "font": "calibri.TTF",
             "size": 45.66,
             "color": "#090909",
             "format": "{:,}",
             "underline": false,
             "language": "en",
             "x": 200,
-            "y": 335
+            "y": 336
         },
         {
             "attr": "datetime",

@@ -1,20 +1,20 @@
 {
     "type": "deposit",
-    "amount_digits_max": 5,
-    "amount_digits_min": 2,
+    "amount_digits_max": 4,
+    "amount_digits_min": 4,
     "data": [
         {
             "attr": "amount",
             "attr_type": "number",
             "align": "left",
             "font": "bahnschrift.ttf",
-            "size": 24.63,
+            "size": 24,
             "color": "#072d52",
             "format": "{:.1f}",
             "underline": false,
             "language": "en",
-            "x": 214,
-            "y": 360
+            "x": 222,
+            "y": 358
         }
     ]
 }

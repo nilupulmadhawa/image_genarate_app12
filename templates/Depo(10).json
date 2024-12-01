@@ -1,7 +1,7 @@
 {
     "type": "deposit",
     "amount_digits_max": 5,
-    "amount_digits_min": 2,
+    "amount_digits_min": 5,
     "data": [
         {
             "attr": "amount",
@@ -14,7 +14,7 @@
             "underline": false,
             "language": "en",
             "x": 207,
-            "y": 242
+            "y": 238
         }
     ]
 }

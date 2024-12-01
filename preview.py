@@ -14,7 +14,7 @@ font_folder = './fonts'
 time_slot = datetime.datetime(2024, 11, 14, 15, 30)  # Sample date and time
 
 
-img ="Depo(8)"
+img ="Depo(15)"
 
 
 processed_images_json_path = './processed_images.json'  # File to store names of processed images
