@@ -222,8 +222,8 @@ for index, row in task.iterrows():
         elif task_type == 'withdrawal':
             amount = random.choice(withdrawal_list)
         elif task_type == 'bonus':
-            amount = random.choice(withdrawal_list)
-            # amount = max_amount
+            # amount = random.choice(withdrawal_list)
+            amount = max_amount
         else:
             print('Task type not found')
             exit()
