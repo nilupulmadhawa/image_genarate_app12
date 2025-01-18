@@ -10,7 +10,7 @@ from googletrans import Translator
 import random
 
 # set output date
-date = datetime(2024, 6, 1)
+date = datetime(2026, 6, 1)
 
 A_presectage = 0.8
 B_presectage = 0.2
