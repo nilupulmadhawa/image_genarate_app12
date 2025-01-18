@@ -10,7 +10,7 @@ from googletrans import Translator
 import random
 
 # set output date
-date = datetime(2018, 6, 1)
+date = datetime(2024, 6, 1)
 
 A_presectage = 0.8
 B_presectage = 0.2
@@ -222,7 +222,8 @@ for index, row in task.iterrows():
         elif task_type == 'withdrawal':
             amount = random.choice(withdrawal_list)
         elif task_type == 'bonus':
-            amount = max_amount
+            amount = random.choice(withdrawal_list)
+            # amount = max_amount
         else:
             print('Task type not found')
             exit()
